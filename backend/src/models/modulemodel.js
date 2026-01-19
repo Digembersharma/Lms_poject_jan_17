@@ -5,7 +5,7 @@ const moduleSchema = new mongoose.Schema({
         ref:"Course"
     },
     video:{
-        type:String,
+        type:String, // cloud uniery ka use karna wala haa
         required : true
     },
     title:{
@@ -27,3 +27,5 @@ const moduleSchema = new mongoose.Schema({
         }
     ]
 },{timestamps:true})
+
+export const Modules = mongoose.model("Course",moduleSchema);

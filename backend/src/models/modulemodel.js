@@ -28,4 +28,4 @@ const moduleSchema = new mongoose.Schema({
     ]
 },{timestamps:true})
 
-export const Modules = mongoose.model("Course",moduleSchema);
+export const Modules = mongoose.model("Modules",moduleSchema);

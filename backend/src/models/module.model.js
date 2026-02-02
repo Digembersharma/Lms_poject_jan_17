@@ -1,4 +1,5 @@
 import mongoose, { trusted } from "mongoose"
+import { Quiz } from "./quiz.model.js"
 const moduleSchema = new mongoose.Schema({
     courseId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -12,12 +13,8 @@ const moduleSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    title:{
-        type: String,
-        required:true
-    },
     quiz:{
-        type:mongoose.Schema.Types.ObjecId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"Quiz"
     },
     comments:[

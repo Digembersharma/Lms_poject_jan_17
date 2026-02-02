@@ -3,6 +3,7 @@ import { connectDB } from "./src/config/db.js";
 import { ENV } from "./src/config/env.js";
 import cookieParser from "cookie-parser";
 import userRoute from "./src/routers/user.route.js";
+import courseRoute from "./src/routers/course.route.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ Test route
+  connectDB();
 app.get("/test", (req, res) => {
     console.log("TEST ROUTE HIT");
     res.send("Server is working");
@@ -19,6 +21,7 @@ app.get("/test", (req, res) => {
 
 // ✅ Router
 app.use('/api', userRoute);
+app.use('/api', courseRoute);
 
 // ✅ Log port correctly
 console.log("PORT:", process.env.PORT);
@@ -26,5 +29,5 @@ console.log("PORT:", process.env.PORT);
 // ✅ Start server
 app.listen(ENV.PORT, () => {
     console.log("Server is working on port", ENV.PORT);
-    connectDB();
+   
 });

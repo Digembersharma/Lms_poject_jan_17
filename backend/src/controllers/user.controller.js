@@ -4,47 +4,60 @@ import jwt from 'jsonwebtoken'
 import { ENV } from "../config/env.js";
 import cloudinary from "../config/cloudinary.js";
 
-
+ 
 
 export const Register = async (req, res) => {
-    try {
-        const { fullName, email, password } = req.body;
+  try {
+    const { fullName, email, password } = req.body;
 
-        if (!fullName || !email || !password) {
-            return res.status(400).json({
-                message: "Please provide all the details"
-            });
-        }
-
-        const user = await User.findOne({ email });
-
-        if (user) {
-            return res.status(400).json({
-                message: "User already exists"
-            });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = new User({
-            fullName,
-            email,
-            password: hashedPassword
-        });
-
-        await newUser.save();
-
-        return res.status(201).json({
-            message: "User registered successfully"
-        });
-
-    } catch (error) {
-        console.log(`error from Register backend, ${error}`);
-        return res.status(500).json({
-            message: "Internal server error"
-        });
+    if (!fullName || !email || !password) {
+      return res.status(400).json({
+        message: "Please provide all required fields"
+      });
     }
-}
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        message: "User already exists"
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await User.create({
+      fullName,
+      email,
+      password: hashedPassword
+    });
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      userId: newUser._id
+    });
+
+  } catch (error) {
+    console.error("REGISTER ERROR:", error);
+
+    // Handle MongoDB duplicate key error
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "Email already registered"
+      });
+    }
+
+    // Handle mongoose validation errors
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        message: error.message
+      });
+    }
+
+    return res.status(500).json({
+      message: error.message || "Internal server error"
+    });
+  }
+};
 
 
 export const Login = async(req,res)=>{

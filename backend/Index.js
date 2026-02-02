@@ -4,6 +4,7 @@ import { ENV } from "./src/config/env.js";
 import cookieParser from "cookie-parser";
 import userRoute from "./src/routers/user.route.js";
 import courseRoute from "./src/routers/course.route.js";
+import moduleRoute from "./src/routers/module.routes.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get("/test", (req, res) => {
 // ✅ Router
 app.use('/api', userRoute);
 app.use('/api', courseRoute);
+app.use('/api/module',moduleRoute);
 
 // ✅ Log port correctly
 console.log("PORT:", process.env.PORT);

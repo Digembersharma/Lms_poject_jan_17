@@ -7,6 +7,7 @@ import courseRoute from "./src/routers/course.route.js";
 import moduleRoute from "./src/routers/module.routes.js";
 import quizRoute from "./src/routers/quiz.route.js";
 import commentRoute from "./src/routers/comment.route.js";
+import analyticRoute from "./src/routers/analytic.route.js";
 
 const app = express();
 
@@ -27,7 +28,9 @@ app.use('/api', userRoute);
 app.use('/api', courseRoute);
 app.use('/api/module',moduleRoute);
 app.use('/api/quiz',quizRoute);
-app.use('/api/comment',commentRoute)
+app.use('/api/comment',commentRoute);
+app.use('/api/anlytic', analyticRoute);
+
 
 // ✅ Log port correctly
 console.log("PORT:", process.env.PORT);

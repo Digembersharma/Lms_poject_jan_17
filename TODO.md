@@ -1,0 +1,4 @@
+- [x] Add missing Tailwind CSS dependencies to package.json
+- [x] Remove tailwindcss plugin from vite.config.js
+- [ ] Install dependencies using npm install
+- [ ] Test running the frontend project with npm run dev

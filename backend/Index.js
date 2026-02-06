@@ -8,9 +8,15 @@ import moduleRoute from "./src/routers/module.routes.js";
 import quizRoute from "./src/routers/quiz.route.js";
 import commentRoute from "./src/routers/comment.route.js";
 import analyticRoute from "./src/routers/analytic.route.js";
+import cors from 'cors'
 
 const app = express();
 
+app.use(cors({
+  origin:ENV.CLIENT_URL,
+  credentials:true
+
+}))
 // ✅ Middleware
 app.use(cookieParser());          // ✅ call function
 app.use(express.json());
@@ -22,6 +28,10 @@ app.get("/test", (req, res) => {
     console.log("TEST ROUTE HIT");
     res.send("Server is working");
 });
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Backend connected successfully 🚀" });
+});
+
 
 // ✅ Router
 app.use('/api', userRoute);
